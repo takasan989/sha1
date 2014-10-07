@@ -27,7 +27,6 @@ namespace {
     }
   }
 
-
   uint32_t f(unsigned int t, uint32_t b, uint32_t c, uint32_t d) {
     if (t <= 19)
       return (b & c) | ((~b) & d);
@@ -69,6 +68,7 @@ void Sha1::input(uint8_t *message, size_t len) {
 }
 
 void Sha1::process(uint32_t result[5]) {
+  /*
   this->padding();
 
   uint32_t w[80] = {};
@@ -110,9 +110,11 @@ void Sha1::process(uint32_t result[5]) {
   
   result[0] = H0; result[1] = H1; result[2] = H2;
   result[3] = H3; result[4] = H4;
+  */
 }
 
 void Sha1::padding() {
+  /*
   int n = this->m_messageLen / BYTE;
   int rem = BYTE - this->m_messageLen % BYTE;
   int size = (n + 1) * BYTE;
@@ -129,4 +131,11 @@ void Sha1::padding() {
       |= this->m_messageLen * 8;
   }
   //print(this->m_paddedMessage, this->m_paddedMessageLen);
+  */
+}
+
+MessageBlock::MessageBlock(const uint8_t data, size_t size = 64) {
+  for (int i = 0; i < size; ++i) {
+    m_data[i] = data[i];
+  }
 }
