@@ -4,9 +4,9 @@ project (sha1-test)
 include_directories (~/usr/include)
 link_directories (~/usr/lib)
 
-add_executable (alltest test.cc)
+add_executable (run_alltest test.cc)
 
-target_link_libraries (alltest
+target_link_libraries (run_alltest
   pthread
   gtest
   gtest_main

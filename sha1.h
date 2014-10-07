@@ -1,29 +1,31 @@
 #include <stdint.h>
+#include <string>
+#include <vector>
 
-namespace std {
-  class vector<T>;
-}
-class MessageBlock;
+class Sha1Result;
 
 class Sha1 {
 public:
   Sha1();
   ~Sha1();
 
-  void process(uint32_t result[5]);
+  void result(Sha1Result *result);
+  Sha1Result result();
   void padding();
   void input(uint8_t *message, size_t len);
   
 private:
-  uint8_t *m_message;
-  size_t m_messageLen;
-  std::vector<MessageBlock> *m_MessageBlocks;
+  uint8_t *m_Message;
+  size_t m_MessageLen;
+  std::vector<uint8_t> m_PaddedMessage;
 };
 
-class MessageBlock {
+class Sha1Result {
 public:
-  MessageBlock(const uint8_t *data, size_t size);
+  void SetResult(const std::vector<uint32_t> &result);
+
+  std::string ToString();
   
 private:
-  uint8_t m_data[64];
-}
+  std::vector<uint32_t> m_Result;
+};
