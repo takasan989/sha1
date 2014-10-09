@@ -6,6 +6,8 @@ class Sha1Result;
 
 class Sha1 {
 public:
+  static const unsigned int BLOCK_SIZE;
+  
   Sha1();
   ~Sha1();
 

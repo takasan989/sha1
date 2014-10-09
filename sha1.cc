@@ -6,9 +6,6 @@
 
 #include "sha1.h"
 
-#define BIT 512
-#define BYTE (BIT / 8)
-
 namespace {
   inline uint32_t f(unsigned int t, uint32_t b, uint32_t c, uint32_t d) {
     if (t <= 19)
@@ -37,6 +34,8 @@ namespace {
   }
 }
 
+const unsigned int Sha1::BLOCK_SIZE = 512 / 8;
+
 Sha1::Sha1() {
 }
 
@@ -53,13 +52,13 @@ void Sha1::input(std::vector<uint8_t> &message) {
 
 void Sha1::input(uint8_t *message, size_t len) {
   // create paddedMessage
-  int n = len / BYTE;
-  int rem = BYTE - len % BYTE;
-  int size = (n + 1) * BYTE;
+  int n = len / BLOCK_SIZE;
+  int rem = BLOCK_SIZE - len % BLOCK_SIZE;
+  int size = (n + 1) * BLOCK_SIZE;
 
   // less space
   if (rem <= 8) {
-    size += BYTE;
+    size += BLOCK_SIZE;
   }
   
   m_PaddedMessage.resize(size);
@@ -104,8 +103,8 @@ void Sha1::result(Sha1Result *result) {
   H[3] = 0x10325476;
   H[4] = 0xC3D2E1F0;
 
-  for (int i = 0; i < m_PaddedMessage.size() / BYTE; i++) {
-    int offset = i * BYTE;
+  for (int i = 0; i < m_PaddedMessage.size() / BLOCK_SIZE; i++) {
+    int offset = i * BLOCK_SIZE;
 
     for (int t = 0; t < 16; t++) {
       w[t]  = this->m_PaddedMessage[offset + t * 4 + 0] << 24;
