@@ -6,4 +6,5 @@ install_manifest.txt
 
 libsha1.a
 
+build
 test/run_*

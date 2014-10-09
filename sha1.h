@@ -9,14 +9,14 @@ public:
   Sha1();
   ~Sha1();
 
-  void result(Sha1Result *result);
-  Sha1Result result();
-  void padding();
+  void input(std::string message);
+  void input(std::vector<uint8_t> &message);
   void input(uint8_t *message, size_t len);
   
+  void result(Sha1Result *result);
+  Sha1Result result();
+  
 private:
-  uint8_t *m_Message;
-  size_t m_MessageLen;
   std::vector<uint8_t> m_PaddedMessage;
 };
 
