@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <string>
+#include <array>
 #include <vector>
 
 class Sha1Result;
@@ -17,15 +18,16 @@ public:
   void reset();
   
 private:
-  std::vector<uint8_t> m_padded_message;
+  std::vector<uint8_t> m_paddedMessage;
 };
 
 class Sha1Result {
 public:
-  void set_result(const std::vector<uint32_t> &result);
+  void setResult(const std::array<uint32_t, 5> &result);
 
-  std::string to_string();
+  std::vector<uint8_t> toBytes();
+  std::string toString();
   
 private:
-  std::vector<uint32_t> m_result;
+  std::array<uint32_t, 5> m_result;
 };

@@ -7,10 +7,10 @@ class Sha1Result;
 
 class HmacSha1 {
 public:
-  void Input(uint8_t *key, uint8_t *message);
-  void Result(Sha1Result *result);
+  void input(uint8_t *key, uint8_t *message);
+  void result(Sha1Result *result);
   
 private:
-  std::vector<uint8_t> m_Key;
-  std::vector<uint8_t> m_Message;
+  std::vector<uint8_t> m_key;
+  std::vector<uint8_t> m_message;
 };

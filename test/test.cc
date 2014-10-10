@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <stdint.h>
+#include <iostream>
 #include <fstream>
 #include "../sha1.h"
 #include "test.h"
@@ -41,7 +42,7 @@ vector<string> file_expects {
   "b110a88a11436b215220486c1081dec2fb0f389a",
 };
 
-int ReadFile(string file, vector<uint8_t> &result) {
+int readFile(string file, vector<uint8_t> &result) {
   string path = TEST_ROOT + file;
   int c;
   FILE *fp;
@@ -77,37 +78,24 @@ TEST_F(Sha1Test, StringTest) {
     sha1.input(string_data[i]);
     sha1.result(result);
 
-    EXPECT_STREQ(string_expects[i].c_str(), result->to_string().c_str());
+    EXPECT_STREQ(string_expects[i].c_str(), result->toString().c_str());
   }
 }
 
-/*
-TEST(sha1_test, string_test) {
-  for (int i = 0; i < string_data.size(); ++i) {
-    sha1 sha1;
-    sha1_result result;
-    sha1.input(string_data[i]);
-    sha1.result(&result);
-    
-    EXPECT_STREQ(string_expects[i].c_str(), result.ToString().c_str());
-  }
-}
-
-TEST(Sha1Test, FileTest) {
+TEST_F(Sha1Test, FileTest) {
   for (int i = 0; i < file_data.size(); ++i) {
-    Sha1 sha1;
-    Sha1Result result;
     vector<uint8_t> bytes;
 
-    if (ReadFile(file_data[i], bytes) == -1) {
-      cout << "[!!!!!!!!!!] " << file_data[i] << " is not exists." << endl;
+    if (readFile(file_data[i], bytes) == -1) {
+      cout << "[!!!!!!!!!!] "
+           << file_data[i]
+           << " is not exists." << endl;
       continue;
     }
 
     sha1.input(bytes);
-    sha1.result(&result);
+    sha1.result(result);
 
-    EXPECT_STREQ(file_expects[i].c_str(), result.ToString().c_str());
+    EXPECT_STREQ(file_expects[i].c_str(), result->toString().c_str());
   }
 }
-*/
