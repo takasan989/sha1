@@ -57,10 +57,35 @@ int ReadFile(string file, vector<uint8_t> &result) {
   fclose(fp);
 }
 
-TEST(Sha1Test, StringTest) {
+class Sha1Test : public ::testing::Test {
+protected:
+  virtual void SetUp() {
+    sha1.reset();
+    result = new Sha1Result();
+  }
+
+  virtual void TearDown() {
+    delete result;
+  }
+  
+  Sha1 sha1;
+  Sha1Result *result;
+};
+
+TEST_F(Sha1Test, StringTest) {
   for (int i = 0; i < string_data.size(); ++i) {
-    Sha1 sha1;
-    Sha1Result result;
+    sha1.input(string_data[i]);
+    sha1.result(result);
+
+    EXPECT_STREQ(string_expects[i].c_str(), result->to_string().c_str());
+  }
+}
+
+/*
+TEST(sha1_test, string_test) {
+  for (int i = 0; i < string_data.size(); ++i) {
+    sha1 sha1;
+    sha1_result result;
     sha1.input(string_data[i]);
     sha1.result(&result);
     
@@ -85,3 +110,4 @@ TEST(Sha1Test, FileTest) {
     EXPECT_STREQ(file_expects[i].c_str(), result.ToString().c_str());
   }
 }
+*/
